@@ -7,7 +7,7 @@ const SignatureValidationFailed =
 
 const app = express();
 const port = process.env.PORT || 4000;
-const cors = require('cors');
+const cors = require("cors");
 
 const config = {
   channelAccessToken:
@@ -20,24 +20,25 @@ let TOKEN =
 
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: "http://localhost:3000",
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
-app.get("/", function (req,res) {
+app.get("/", function (req, res) {
   res.send("Linebot API");
 });
 
 //reject user order
-app.post("/rejectOrder", function (req,res) {
+app.post("/rejectOrder", function (req, res) {
   let dataString;
   dataString = JSON.stringify({
     to: req.body.id,
     messages: [
       {
         type: "text",
-        text: "ตอนนี้ไม่มีเมนู " + req.body.order +" สั่งเมนูใหม่ได้นะ",
+        text: "ตอนนี้ไม่มีเมนู " + req.body.order + " สั่งเมนูใหม่ได้นะ",
       },
     ],
   });
@@ -68,11 +69,11 @@ app.post("/rejectOrder", function (req,res) {
   // Send data
   request.write(dataString);
   request.end();
-  res.send("sent message")
+  res.send("sent message");
 });
 
 // Send message to user who ordered
-app.post("/finishedOrder", function (req,res) {
+app.post("/finishedOrder", function (req, res) {
   let dataString;
   dataString = JSON.stringify({
     to: req.body.id,
@@ -110,12 +111,13 @@ app.post("/finishedOrder", function (req,res) {
   // Send data
   request.write(dataString);
   request.end();
-  res.send("sent message")
+  res.send("sent message");
 });
+
 app.use(middleware(config));
+
 // Waiting user response to send reply message
 app.post("/webhook", function (req, res) {
-  res.send("HTTP POST request sent to the webhook URL!");
   if (req.body.events[0].type === "message") {
     // Message data, must be stringified
     let userId = req.body.events[0].source.userId;
@@ -184,6 +186,7 @@ app.post("/webhook", function (req, res) {
     // Send data
     request.write(dataString);
     request.end();
+    res.send("HTTP POST request sent to the webhook URL!");
   }
 });
 
