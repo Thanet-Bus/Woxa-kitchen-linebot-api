@@ -31,7 +31,7 @@ app.get("/", function (req, res) {
 });
 
 //reject user order
-app.post("/rejectOrder", function (req, res) {
+app.post("/reject-order", function (req, res) {
   let dataString;
   dataString = JSON.stringify({
     to: req.body.id,
@@ -73,7 +73,7 @@ app.post("/rejectOrder", function (req, res) {
 });
 
 // Send message to user who ordered
-app.post("/finishedOrder", function (req, res) {
+app.post("/finished-order", function (req, res) {
   let dataString;
   dataString = JSON.stringify({
     to: req.body.id,
@@ -118,6 +118,7 @@ app.use(middleware(config));
 
 // Waiting user response to send reply message
 app.post("/webhook", function (req, res) {
+  res.send("HTTP POST request sent to the webhook URL!");
   if (req.body.events[0].type === "message") {
     // Message data, must be stringified
     let userId = req.body.events[0].source.userId;
@@ -186,7 +187,6 @@ app.post("/webhook", function (req, res) {
     // Send data
     request.write(dataString);
     request.end();
-    res.send("HTTP POST request sent to the webhook URL!");
   }
 });
 
