@@ -18,12 +18,13 @@ const config = {
 let TOKEN =
   "VGiLhUm7XgQc1PTql/7G3Hmtb6dcuH4qsIjujHuXRuNzNfKYcvY9Y/LUVtSDLedp7uX9ItH8FvGwRmqwjRLKPU1ts3z1b1oE6qRrLDh/zJQvVGAdHvS6nbVgmfY2NwA1r+nKspZRomAMbhDaY15h6QdB04t89/1O/w1cDnyilFU=";
 
-app.use(express.json());
+app.use("/reject-order"||"/finished-order",express.json());
+
+// differnt port request each other
 const corsOptions = {
   origin: "http://localhost:3000",
   credentials: true,
 };
-
 app.use(cors(corsOptions));
 
 app.get("/", function (req, res) {
@@ -114,7 +115,7 @@ app.post("/finished-order", function (req, res) {
   res.send("sent message");
 });
 
-app.use(middleware(config));
+app.use("/webhook",middleware(config));
 
 // Waiting user response to send reply message
 app.post("/webhook", function (req, res) {
@@ -122,7 +123,6 @@ app.post("/webhook", function (req, res) {
   if (req.body.events[0].type === "message") {
     // Message data, must be stringified
     let userId = req.body.events[0].source.userId;
-    console.log(userId);
     console.log(req.body.events[0]);
     var dataString;
     if (
