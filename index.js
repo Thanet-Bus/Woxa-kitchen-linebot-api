@@ -18,7 +18,7 @@ const config = {
 let TOKEN =
   "VGiLhUm7XgQc1PTql/7G3Hmtb6dcuH4qsIjujHuXRuNzNfKYcvY9Y/LUVtSDLedp7uX9ItH8FvGwRmqwjRLKPU1ts3z1b1oE6qRrLDh/zJQvVGAdHvS6nbVgmfY2NwA1r+nKspZRomAMbhDaY15h6QdB04t89/1O/w1cDnyilFU=";
 
-app.use("/reject-order" || "/finished-order", express.json());
+app.use("/reject-order", express.json());
 
 // differnt port request each other
 const corsOptions = {
@@ -73,6 +73,7 @@ app.post("/reject-order", function (req, res) {
   res.send("sent message");
 });
 
+app.use("/finished-order", express.json());
 // Send message to user who ordered
 app.post("/finished-order", function (req, res) {
   let dataString;
