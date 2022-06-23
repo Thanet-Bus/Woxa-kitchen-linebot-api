@@ -31,6 +31,48 @@ app.get("/", function (req, res) {
   res.send("Linebot API");
 });
 
+app.use("/receive-order", express.json());
+app.post("/receive-order", function (req, res) {
+  let dataString;
+  dataString = JSON.stringify({
+    to: req.body.id,
+    messages: [
+      {
+        type: "text",
+        text: "ได้รับออเดอร์ " + req.body.order + " แล้ว\nหากเสร็จแล้วจะแจ้งให้ทราบอีกครั้ง",
+      },
+    ],
+  });
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + TOKEN,
+  };
+  const webhookOptions = {
+    hostname: "api.line.me",
+    path: "/v2/bot/message/push",
+    method: "POST",
+    headers: headers,
+    body: dataString,
+  };
+
+  // Define request
+  const request = https.request(webhookOptions, (res) => {
+    res.on("data", (d) => {
+      process.stdout.write(d);
+    });
+  });
+
+  // Handle error
+  request.on("error", (err) => {
+    console.error(err);
+  });
+
+  // Send data
+  request.write(dataString);
+  request.end();
+  res.send("sent message");
+});
+
 //reject user order
 app.post("/reject-order", function (req, res) {
   let dataString;
@@ -74,7 +116,6 @@ app.post("/reject-order", function (req, res) {
 });
 
 app.use("/finished-order", express.json());
-// Send message to user who ordered
 app.post("/finished-order", function (req, res) {
   let dataString;
   dataString = JSON.stringify({
@@ -117,8 +158,6 @@ app.post("/finished-order", function (req, res) {
 });
 
 app.use("/webhook", middleware(config));
-
-// Waiting user response to send reply message
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
   if (req.body.events[0].type === "message") {
