@@ -26,6 +26,7 @@ const corsOptions = {
     "http://localhost:3000",
     "https://woxa-food-order.herokuapp.com",
     "https://woxa-kitchen-db7f5.web.app/",
+    "https://f6ce-14-207-205-16.ap.ngrok.io"
   ],
   credentials: true,
 };
