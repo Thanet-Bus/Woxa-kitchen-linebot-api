@@ -22,7 +22,7 @@ app.use("/reject-order", express.json());
 
 // differnt port request each other
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://woxa-food-order.herokuapp.com"],
+  origin: ["http://localhost:3000", "https://woxa-food-order.herokuapp.com","https://0310-14-207-205-16.ap.ngrok.io"],
   credentials: true,
 };
 app.use(cors(corsOptions));
