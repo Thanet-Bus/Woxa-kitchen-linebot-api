@@ -22,7 +22,11 @@ app.use("/reject-order", express.json());
 
 // differnt port request each other
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://woxa-food-order.herokuapp.com","https://0310-14-207-205-16.ap.ngrok.io"],
+  origin: [
+    "http://localhost:3000",
+    "https://woxa-food-order.herokuapp.com",
+    "https://woxa-kitchen-db7f5.web.app/",
+  ],
   credentials: true,
 };
 app.use(cors(corsOptions));
@@ -39,7 +43,10 @@ app.post("/receive-order", function (req, res) {
     messages: [
       {
         type: "text",
-        text: "ได้รับออเดอร์ " + req.body.order + " แล้ว\nหากเสร็จแล้วจะแจ้งให้ทราบอีกครั้ง",
+        text:
+          "ได้รับออเดอร์ " +
+          req.body.order +
+          " แล้ว\nหากเสร็จแล้วจะแจ้งให้ทราบอีกครั้ง",
       },
     ],
   });
