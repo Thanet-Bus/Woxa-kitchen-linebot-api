@@ -188,9 +188,9 @@ app.post("/webhook", function (req, res) {
             type: "image",
             //TODO: find menu image url
             originalContentUrl:
-              "https://i.postimg.cc/Nj9kPtkF/received-987379918437359.jpg",
+              "https://i.postimg.cc/jStmpzPG/menu.jpg",
             previewImageUrl:
-              "https://i.postimg.cc/Nj9kPtkF/received-987379918437359.jpg",
+              "https://i.postimg.cc/jStmpzPG/menu.jpg",
           },
         ],
       });
